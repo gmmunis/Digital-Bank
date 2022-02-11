@@ -1,11 +1,15 @@
 public abstract class Account implements IAccount {
 
+    private static final int DEFAULT_BRANCH = 1;
+    private static int SEQUENTIAL = 1;
+
     protected int branch;
     protected int number;
     protected double balance;
 
     public Account() {
-        super();
+        this.branch = DEFAULT_BRANCH;
+        this.number = SEQUENTIAL++;
     }
 
     @Override
