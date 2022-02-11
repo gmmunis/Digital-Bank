@@ -6,20 +6,29 @@ public abstract class Account implements IAccount {
     protected int branch;
     protected int number;
     protected double balance;
+    protected  Client client;
 
-    public Account() {
-        this.branch = DEFAULT_BRANCH;
+    public Account(Client client) {
+        this.branch = Account.DEFAULT_BRANCH;
         this.number = SEQUENTIAL++;
+        this.client = client;
     }
 
     @Override
-    public void withdrawal(double value) {}
+    public void withdrawal(double value) {
+        balance -= value;
+    }
 
     @Override
-    public void deposit(double value) {}
+    public void deposit(double value) {
+        balance += value;
+    }
 
     @Override
-    public void transfer(double value, Account accountHolder) {}
+    public void transfer(double value, IAccount accountHolder) {
+        this.withdrawal(value);
+        accountHolder.withdrawal(value);
+    }
 
     public int getBranch() {
         return branch;
@@ -31,5 +40,12 @@ public abstract class Account implements IAccount {
 
     public double getBalance() {
         return balance;
+    }
+
+    protected void printCommonInformation() {
+        System.out.println(String.format("AccountHolder: %s", this.client.getName()));
+        System.out.println(String.format("Branch: %d", this.branch));
+        System.out.println(String.format("Number: %d", this.number));
+        System.out.println(String.format("Balance: %.2f", this.balance));
     }
 }
